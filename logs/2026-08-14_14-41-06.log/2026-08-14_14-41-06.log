@@ -1,3 +1,0 @@
-[2026-08-14 14:41:07,111] INFO - Note: NumExpr detected 32 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 16.
-[2026-08-14 14:41:07,111] INFO - NumExpr defaulting to 16 threads.
-[2026-08-14 14:41:08,262] INFO - Initiate the data ingestion
