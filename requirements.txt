@@ -3,8 +3,7 @@ pandas
 numpy
 pymongo
 certifi
-python -m pip install "pymongo[srv]==3.11"
-pymongo
-
+pymongo[srv]==3.11
+scikit-learn
 
 ##-e .

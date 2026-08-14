@@ -11,3 +11,10 @@ class NetworkSecurityException(Exception):
     def __str__(self):
         return f"Error occured in script: [{self.file_name}] at line number: [{self.line_number}] error message: [{self.error_message}]"
     
+if __name__=="__main__":
+    try:
+        logger.logging.info("Enter try block")
+        a=1/0
+        print("this will not be printed",a)
+    except Exception as e:
+        raise NetworkSecurityException(e, sys)
