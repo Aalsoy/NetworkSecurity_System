@@ -15,6 +15,10 @@ TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 
 SCHEMA_FILE_PATH = os.path.join("data_schema", "schema.yaml")
+if not os.path.exists(SCHEMA_FILE_PATH):
+    nested_schema_path = os.path.join("data_schema", "data_schema", "schema.yml")
+    if os.path.exists(nested_schema_path):
+        SCHEMA_FILE_PATH = nested_schema_path
 
 SAVED_MODEL_DIR =os.path.join("saved_models")
 MODEL_FILE_NAME = "model.pkl"
