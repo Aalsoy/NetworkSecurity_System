@@ -27,23 +27,40 @@ class DataIngestion:
             raise NetworkSecurityException(e,sys)
         
     def export_collection_as_dataframe(self):
-        """
-        Read data from mongodb
-        """
         try:
-            database_name=self.data_ingestion_config.database_name
-            collection_name=self.data_ingestion_config.collection_name
-            self.mongo_client=pymongo.MongoClient(MONGO_DB_URL)
-            collection=self.mongo_client[database_name][collection_name]
+            database_name = self.data_ingestion_config.database_name
+            collection_name = self.data_ingestion_config.collection_name
 
-            df=pd.DataFrame(list(collection.find()))
+            print("MongoDB URL exists:", MONGO_DB_URL is not None)
+            print("Database:", database_name)
+            print("Collection:", collection_name)
+
+            self.mongo_client = pymongo.MongoClient(MONGO_DB_URL)
+
+            # Test MongoDB connection
+            self.mongo_client.admin.command("ping")
+            print("MongoDB connection successful")
+
+            collection = self.mongo_client[database_name][collection_name]
+
+            # Check how many documents exist
+            document_count = collection.count_documents({})
+            print("Documents in collection:", document_count)
+
+            df = pd.DataFrame(list(collection.find()))
+
+            print("DataFrame shape:", df.shape)
+            print("DataFrame columns:", df.columns.tolist())
+
             if "_id" in df.columns.to_list():
-                df=df.drop(columns=["_id"],axis=1)
-            
-            df.replace({"na":np.nan},inplace=True)
+                df = df.drop(columns=["_id"], axis=1)
+
+            df.replace({"na": np.nan}, inplace=True)
+
             return df
+
         except Exception as e:
-            raise NetworkSecurityException
+            raise NetworkSecurityException(e, sys)
         
     def export_data_into_feature_store(self,dataframe: pd.DataFrame):
         try:
